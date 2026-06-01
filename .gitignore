@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+new_venv/
+*.egg-info/
+dist/
+build/
+
+# YOLO runs (large model weights and outputs)
+runs/
+weights/
+
+# Video files
+*.mp4
+*.mov
+*.avi
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

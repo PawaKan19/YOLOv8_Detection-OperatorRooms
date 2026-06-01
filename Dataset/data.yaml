@@ -1,0 +1,13 @@
+train: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\train\images
+val: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\valid\images
+test: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\test\images
+
+nc: 3
+names: ['Head', 'People', 'Phone']
+
+roboflow:
+  workspace: kans-workspace-ypvnz
+  project: loadingroomv3
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/kans-workspace-ypvnz/loadingroomv3/dataset/3
