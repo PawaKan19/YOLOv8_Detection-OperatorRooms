@@ -15,6 +15,12 @@ build/
 runs/
 weights/
 
+# Dataset (images and labels - too large for git)
+Dataset/train/
+Dataset/test/
+Dataset/valid/
+Dataset/*.txt
+
 # Video files
 *.mp4
 *.mov

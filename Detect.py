@@ -4,7 +4,7 @@ import numpy as np
 from ultralytics import YOLO
 
 # Load the trained YOLO model
-model = YOLO(r"D:\Intern Project\YOLOv8_Detection-OperatorRooms\runs\detect\train-15\weights\last.pt")
+model = YOLO(r"D:\Intern Project\YOLOv8_Detection-OperatorRooms\runs\detect\train-4\weights\last.pt")
 
 # Video source
 video_path = r"D:\Intern Project\YOLOv8_Detection-OperatorRooms\_โรงงานบางโคล่_20260513135249_55169326.mp4"
