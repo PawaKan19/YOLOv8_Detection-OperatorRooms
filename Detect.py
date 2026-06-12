@@ -41,7 +41,7 @@ PHONE_STATUS_HOLD_TIME = 8
 PHONE_HOLD_FRAMES      = 3
 
 STATUS_DEBOUNCE_FRAMES = 10
-HEAD_ABSENCE_TIMEOUT   = 600
+NOBODY_TIMEOUT_SEC   = 600
 
 # ─────────────────────────────────────────────
 # State
@@ -57,9 +57,7 @@ status_debounce        = 0
 phone_detect_counter   = 0
 phone_hold_counter     = 0
 show_phone_status      = False
-phone_call_start_time  = None
-phone_call_end_time    = None
-phone_call_duration    = 0
+phone_timers           = {}
 
 # ─────────────────────────────────────────────
 # Helpers
@@ -162,6 +160,10 @@ def people_nms(raw):
             result.append((tid_i, bbox_i, conf_i))
     return result
 
+def center_inside(inner, outer):
+  cx=(inner[0]+inner[2])/2
+  cy=(inner[1]+inner[3])/2
+  return outer[0]<=cx<=outer[2] and outer[1]<=cy<=outer[3]
 
 # ─────────────────────────────────────────────
 # Main loop
@@ -222,12 +224,12 @@ while cap.isOpened():
         last_person_seen = time.time()
 
     time_since_person = time.time() - last_person_seen
-    person_absent     = time_since_person >= HEAD_ABSENCE_TIMEOUT
+    person_absent     = time_since_person >= NOBODY_TIMEOUT_SEC
 
-    if employee_count > 0 or time_since_person < 5:
+    if employee_count > 0 :
         candidate_status = "Standby Loading"
     elif person_absent:
-        candidate_status = "Nobody In Room"
+        candidate_status = "Nobody Here"
     else:
         candidate_status = "Standby Loading"
 
@@ -313,15 +315,15 @@ while cap.isOpened():
 
     for tid, box, conf in people_display:
         x1, y1, x2, y2 = map(int, box)
-        has_head  = any(calculate_iou(hb, box) > 0.05 for hb in smoothed_head_boxes)
-        has_phone = any(calculate_iou(pb, box) > 0.05 for pb in smoothed_phone_boxes)
+        has_head  = any(center_inside(hb, box) for hb in smoothed_head_boxes)
+        has_phone = any(center_inside(pb, box) for pb in smoothed_phone_boxes)
         tags  = ("Head " if has_head else "") + ("Phone" if has_phone else "")
         label = "P#" + str(tid) + " (" + f"{conf:.2f}" + ")" + (" [" + tags.strip() + "]" if tags.strip() else "")
         cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 2)
         cv2.putText(annotated, label, (x1, max(y1 - 10, 15)),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 0), 2)
 
-    text_color = (0, 255, 0) if current_status != "Nobody In Room" else (0, 0, 255)
+    text_color = (0, 255, 0) if current_status != "Nobody Here" else (0, 0, 255)
     tw = cv2.getTextSize(current_status, cv2.FONT_HERSHEY_SIMPLEX, 0.8, 2)[0][0]
     cv2.putText(annotated, current_status,
                 (frame_w - tw - 10, 30),
