@@ -1,6 +1,6 @@
-train: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\train\images
-val: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\valid\images
-test: D:\Intern Project\YOLOv8_Detection-OperatorRooms\Dataset\test\images
+train: D:\InternProject\YOLOv8_Detection-OperatorRooms\Dataset\train\images
+val: D:\InternProject\YOLOv8_Detection-OperatorRooms\Dataset\valid\images
+test: D:\InternProject\YOLOv8_Detection-OperatorRooms\Dataset\test\images
 
 nc: 3
 names: ['Head', 'People', 'Phone']
@@ -8,6 +8,6 @@ names: ['Head', 'People', 'Phone']
 roboflow:
   workspace: kans-workspace-ypvnz
   project: loadingroomv3-p-h-p
-  version: 7
+  version: 8
   license: CC BY 4.0
-  url: https://universe.roboflow.com/kans-workspace-ypvnz/loadingroomv3-p-h-p/dataset/7
+  url: https://universe.roboflow.com/kans-workspace-ypvnz/loadingroomv3-p-h-p/dataset/8
